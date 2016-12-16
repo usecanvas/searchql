@@ -37,26 +37,26 @@ defmodule CanQL do
       query_string
       |> String.split(~r/\s+/)
       |> Enum.reverse
-      |> do_parse
+      |> parse_or
 
     {:query, [leaf]}
   end
 
-  @spec do_parse([String.t], [leaf]) :: leaf
-  defp do_parse(tokens, tree \\ [])
+  @spec parse_and([String.t], [leaf]) :: leaf
+  defp parse_and(tokens, tree \\ [])
 
-  defp do_parse([], tree),
-    do: parse_or(tree)
-  defp do_parse(["AND" | tokens], tree),
-    do: {:and, [do_parse(tokens), do_parse(tree)]}
-  defp do_parse([word | query], tree),
-    do: do_parse(query, tree ++ [word])
+  defp parse_and([], tree),
+    do: parse_text(tree)
+  defp parse_and(["AND" | tokens], tree),
+    do: {:and, [parse_and(tokens), parse_and(tree)]}
+  defp parse_and([word | query], tree),
+    do: parse_and(query, tree ++ [word])
 
   @spec parse_or([String.t], [leaf]) :: leaf
   defp parse_or(tokens, tree \\ [])
 
   defp parse_or([], tree),
-    do: parse_text(tree)
+    do: parse_and(tree)
   defp parse_or(["OR" | tokens], tree),
     do: {:or, [parse_or(tokens), parse_or(tree)]}
   defp parse_or([word | tokens], tree),

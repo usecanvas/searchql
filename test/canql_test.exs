@@ -81,15 +81,16 @@ defmodule CanqlTest do
     test "parses combination AND and OR" do
       assert CanQL.parse(~s(foo OR bar AND baz AND qux OR foo2 OR bar2)) ==
         {:query, [
-          and: [
-            and: [
-              or: [
-                has: ["foo"], has: ["bar"]],
-              has: ["baz"]],
+          or: [
             or: [
               or: [
-                has: ["qux"], has: ["foo2"]],
-              has: ["bar2"]]]]}
+                has: ["foo"],
+                and: [
+                  and: [
+                    has: ["bar"], has: ["baz"]],
+                  has: ["qux"]]],
+              has: ["foo2"]],
+            has: ["bar2"]]]}
     end
   end
 end
