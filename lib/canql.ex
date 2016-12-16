@@ -8,6 +8,24 @@ defmodule CanQL do
   @type leaf :: {atom, [String.t | leaf]}
 
   @doc """
+  Return whether a query matches data using a given module.
+  """
+  @spec matches?(String.t, any, atom) :: boolean
+  def matches?(query_string, data, mod) do
+    {:query, [{tip, args}]} = parse(query_string)
+    {:query, [leaf]} = parse(query_string)
+    leaf_matches?(leaf, data, mod)
+  end
+
+  @spec leaf_matches?(leaf, any, atom) :: boolean
+  defp leaf_matches?({:and, [leaf_a, leaf_b]}, data, mod),
+    do: leaf_matches?(leaf_a, data, mod) and leaf_matches?(leaf_b, data, mod)
+  defp leaf_matches?({:or, [leaf_a, leaf_b]}, data, mod),
+    do: leaf_matches?(leaf_a, data, mod) or leaf_matches?(leaf_b, data, mod)
+  defp leaf_matches?({func, args}, data, mod),
+    do: apply(mod, func, [{args, data}])
+
+  @doc """
   Parse a query string into a tree that can be iterated over in order to
   evaluate the query against data.
 
