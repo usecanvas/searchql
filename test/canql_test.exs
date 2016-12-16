@@ -54,7 +54,7 @@ defmodule CanqlTest do
     end
 
     test "parses multiple AND" do
-      assert CanQL.parse(~s(foo AND bar AND baz)) ==
+      assert CanQL.parse(~s(foo AND bar and baz)) ==
         {:query, [
           and: [
             and: [
@@ -70,7 +70,7 @@ defmodule CanqlTest do
     end
 
     test "parses multiple OR" do
-      assert CanQL.parse(~s(foo OR bar OR baz)) ==
+      assert CanQL.parse(~s(foo OR bar or baz)) ==
         {:query, [
           or: [
             or: [

@@ -47,7 +47,7 @@ defmodule CanQL do
 
   defp parse_and([], tree),
     do: parse_text(tree)
-  defp parse_and(["AND" | tokens], tree),
+  defp parse_and([word | tokens], tree) when word in ~w(and AND),
     do: {:and, [parse_and(tokens), parse_and(tree)]}
   defp parse_and([word | query], tree),
     do: parse_and(query, tree ++ [word])
@@ -57,7 +57,7 @@ defmodule CanQL do
 
   defp parse_or([], tree),
     do: parse_and(tree)
-  defp parse_or(["OR" | tokens], tree),
+  defp parse_or([word | tokens], tree) when word in ~w(or OR),
     do: {:or, [parse_or(tokens), parse_or(tree)]}
   defp parse_or([word | tokens], tree),
     do: parse_or(tokens, tree ++ [word])
