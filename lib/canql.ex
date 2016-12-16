@@ -12,7 +12,6 @@ defmodule CanQL do
   """
   @spec matches?(String.t, any, atom) :: boolean
   def matches?(query_string, data, mod) do
-    {:query, [{tip, args}]} = parse(query_string)
     {:query, [leaf]} = parse(query_string)
     leaf_matches?(leaf, data, mod)
   end
