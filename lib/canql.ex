@@ -47,7 +47,7 @@ defmodule CanQL do
       iex> CanQL.parse(~s(foo bar baz))
       [{:data, "foo bar baz"}]
   """
-  @spec parse(String.t) :: {:query, [token]}
+  @spec parse(String.t) :: [token]
   def parse(query_string) do
     [{:data, query_string}]
     |> QuoteParser.parse
