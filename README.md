@@ -34,9 +34,9 @@ SearchQL.matches?(
   SearchQL.StringQuerier) # true
 ```
 
-## Installation
+For more info, see the [SearchQL documentation][searchql_documentation].
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+## Installation
 
   1. Add `searchql` to your list of dependencies in `mix.exs`:
 
@@ -55,4 +55,5 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
     ```
 
 [querier_behaviour]: https://github.com/usecanvas/searchql/blob/master/lib/searchql/querier.ex
+[searchql_documentation]: https://hexdocs.pm/searchql/readme.html
 [string_querier]: https://github.com/usecanvas/searchql/blob/master/test/support/string_querier.ex
