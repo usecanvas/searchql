@@ -14,9 +14,7 @@ defmodule CanQL.BooleanParser do
   """
   @spec parse([CanQL.token]) :: [CanQL.token]
   def parse(tokens) do
-    tokens
-    |> Enum.reduce([], &make_words/2)
-    |> parse_or
+    tokens |> Enum.reduce([], &make_words/2) |> parse_or
   end
 
   @spec parse_or([CanQL.token], [CanQL.token]) :: [CanQL.token]

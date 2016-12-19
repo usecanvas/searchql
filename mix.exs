@@ -27,6 +27,7 @@ defmodule CanQL.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:dialyxir, "~> 0.4", only: [:dev], runtime: false}]
+    [{:dialyxir, "~> 0.4", only: [:dev], runtime: false},
+     {:credo, "~> 0.5", only: [:dev]}]
   end
 end
