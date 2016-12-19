@@ -7,7 +7,7 @@ defmodule SearchQL.BooleanParser do
 
   @doc """
   Parses a list of tokens and returns that list with boolean expressions
-  replaced by boolean tokens.
+  replaced by boolean tokens. Note that boolean parsing is case-**in**sensitive.
 
       iex> SearchQL.BooleanParser.parse([data: "foo and bar"])
       [and: {[data: "foo"], [data: "bar"]}]
