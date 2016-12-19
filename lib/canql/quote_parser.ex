@@ -17,12 +17,10 @@ defmodule CanQL.QuoteParser do
   @spec do_parse([CanQL.token], [CanQL.token]) :: [CanQL.token]
   defp do_parse(tokens, result \\ [])
   defp do_parse([], result), do: Enum.reverse(result)
-
   defp do_parse([{:data, data} | tokens], result) do
     new_tokens = parse_quote(data, [])
     do_parse(tokens, new_tokens ++ result)
   end
-
   defp do_parse([token | tokens], result),
     do: do_parse(tokens, [token | result])
 

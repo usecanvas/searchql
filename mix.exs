@@ -7,7 +7,8 @@ defmodule CanQL.Mixfile do
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps()]
+     deps: deps(),
+     aliases: aliases]
   end
 
   # Configuration for the OTP application
@@ -27,7 +28,11 @@ defmodule CanQL.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:dialyxir, "~> 0.4", only: [:dev], runtime: false},
-     {:credo, "~> 0.5", only: [:dev]}]
+    [{:dialyxir, "~> 0.4", only: [:dev, :test], runtime: false},
+     {:credo, "~> 0.5", only: [:dev, :test]}]
+  end
+
+  defp aliases do
+    [ci: ["test", "credo --strict", "dialyzer"]]
   end
 end

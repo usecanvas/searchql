@@ -12,11 +12,8 @@ defmodule CanQL do
   Return whether a query matches data using a given module.
   """
   @spec matches?(String.t, any, atom) :: boolean
-  def matches?(query_string, data, mod) do
-    query_string
-    |> parse
-    |> do_matches?(data, mod)
-  end
+  def matches?(query_string, data, mod),
+    do: query_string |> parse |> do_matches?(data, mod)
 
   @spec do_matches?([CanQL.token], any, atom) :: boolean
   defp do_matches?(tokens, data, mod) do
@@ -48,9 +45,6 @@ defmodule CanQL do
       [{:data, "foo bar baz"}]
   """
   @spec parse(String.t) :: [token]
-  def parse(query_string) do
-    [{:data, query_string}]
-    |> QuoteParser.parse
-    |> BooleanParser.parse
-  end
+  def parse(query_string),
+    do: [{:data, query_string}] |> QuoteParser.parse |> BooleanParser.parse
 end
