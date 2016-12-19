@@ -3,58 +3,58 @@ defmodule CanQLTest do
 
   doctest CanQL
 
-  alias CanQL.StringQuery
+  alias CanQL.StringQuerier
 
   describe ".matches?/2" do
     test "matches basic string" do
-      assert CanQL.matches?(~s(foo bar), "foo bar baz", StringQuery)
-      refute CanQL.matches?(~s(foo bar), "foo baz baz", StringQuery)
+      assert CanQL.matches?(~s(foo bar), "foo bar baz", StringQuerier)
+      refute CanQL.matches?(~s(foo bar), "foo baz baz", StringQuerier)
     end
 
     test "matches basic OR" do
-      assert CanQL.matches?(~s(foo OR bar), "foo", StringQuery)
-      assert CanQL.matches?(~s(foo OR bar), "bar", StringQuery)
-      refute CanQL.matches?(~s(foo OR bar), "baz", StringQuery)
+      assert CanQL.matches?(~s(foo OR bar), "foo", StringQuerier)
+      assert CanQL.matches?(~s(foo OR bar), "bar", StringQuerier)
+      refute CanQL.matches?(~s(foo OR bar), "baz", StringQuerier)
     end
 
     test "matches multiple OR" do
-      assert CanQL.matches?(~s(foo OR bar OR baz), "foo", StringQuery)
-      assert CanQL.matches?(~s(foo OR bar OR baz), "bar", StringQuery)
-      refute CanQL.matches?(~s(foo OR bar OR baz), "qux", StringQuery)
+      assert CanQL.matches?(~s(foo OR bar OR baz), "foo", StringQuerier)
+      assert CanQL.matches?(~s(foo OR bar OR baz), "bar", StringQuerier)
+      refute CanQL.matches?(~s(foo OR bar OR baz), "qux", StringQuerier)
     end
 
     test "matches basic AND" do
-      assert CanQL.matches?(~s(foo AND bar), "foo bar", StringQuery)
-      refute CanQL.matches?(~s(foo AND bar), "foo baz", StringQuery)
+      assert CanQL.matches?(~s(foo AND bar), "foo bar", StringQuerier)
+      refute CanQL.matches?(~s(foo AND bar), "foo baz", StringQuerier)
     end
 
     test "matches multiple AND" do
-      assert CanQL.matches?(~s(foo AND bar AND baz), "foo bar baz", StringQuery)
-      refute CanQL.matches?(~s(foo AND bar AND baz), "foo bar qux", StringQuery)
+      assert CanQL.matches?(~s(foo AND bar AND baz), "foo bar baz", StringQuerier)
+      refute CanQL.matches?(~s(foo AND bar AND baz), "foo bar qux", StringQuerier)
     end
 
     test "matches combination AND and OR" do
       assert CanQL.matches?(
         ~s(foo OR bar AND baz AND qux OR foo2 OR bar2),
         ~s(bar lala baz qux),
-        StringQuery)
+        StringQuerier)
     end
 
     test "matches quotes" do
       assert CanQL.matches?(
         ~s(foo "bar baz"),
         ~s(foo bar baz qux),
-        StringQuery)
+        StringQuerier)
 
       refute CanQL.matches?(
         ~s(foo "bar baz qux" fooo),
         ~s(foo bar baz qux),
-        StringQuery)
+        StringQuerier)
     end
 
     test "matches mixed quotes and bools" do
       query = ~s("foo bar" OR "foo baz" AND qux)
-      assert CanQL.matches?(query, "foo bar qux", StringQuery)
+      assert CanQL.matches?(query, "foo bar qux", StringQuerier)
     end
   end
 

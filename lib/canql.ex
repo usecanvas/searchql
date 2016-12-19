@@ -38,7 +38,7 @@ defmodule CanQL do
   defp token_matches?({:or, {tok_a, tok_b}}, data, mod),
     do: token_matches?(tok_a, data, mod) or token_matches?(tok_b, data, mod)
   defp token_matches?({func, args}, data, mod),
-    do: apply(mod, func, [{args, data}])
+    do: apply(mod, func, [args, data])
 
   @doc """
   Parse a query string into a tree that can be iterated over in order to
