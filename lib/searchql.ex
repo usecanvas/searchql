@@ -6,7 +6,7 @@ defmodule SearchQL do
 
   alias SearchQL.{BooleanParser, QuoteParser}
 
-  @type token :: {atom, String.t | {token, token}}
+  @type token :: {atom, String.t | {[token], [token]}}
 
   @doc """
   Return whether a query matches data using a given module.
