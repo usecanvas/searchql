@@ -1,4 +1,4 @@
-defmodule CanqlTest do
+defmodule CanQLTest do
   use ExUnit.Case
 
   doctest CanQL
@@ -38,6 +38,30 @@ defmodule CanqlTest do
         ~s(foo OR bar AND baz AND qux OR foo2 OR bar2),
         ~s(bar lala baz qux),
         StringQuery)
+    end
+
+    test "matches quotes" do
+      assert CanQL.matches?(
+        ~s(foo "bar baz"),
+        ~s(foo bar baz qux),
+        StringQuery)
+
+      refute CanQL.matches?(
+        ~s(foo "bar baz qux" fooo),
+        ~s(foo bar baz qux),
+        StringQuery)
+    end
+
+    test "matches mixed quotes and bools" do
+      query = ~s("foo bar" OR "foo baz" AND qux)
+      assert CanQL.matches?(query, "foo bar qux", StringQuery)
+    end
+  end
+
+  describe ".parse/1" do
+    test "parses combined boolean and quotes" do
+      assert CanQL.parse(~s("foo bar" AND baz)) ==
+        [and: {[quote: "foo bar"], [data: "baz"]}]
     end
   end
 end

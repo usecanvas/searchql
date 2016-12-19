@@ -1,4 +1,4 @@
-defmodule Canql.Mixfile do
+defmodule CanQL.Mixfile do
   use Mix.Project
 
   def project do

@@ -4,7 +4,7 @@ defmodule CanQL do
   Canvas documents.
   """
 
-  alias CanQL.BooleanParser
+  alias CanQL.{BooleanParser, QuoteParser}
 
   @type token :: {atom, String.t | {token, token}}
 
@@ -13,11 +13,26 @@ defmodule CanQL do
   """
   @spec matches?(String.t, any, atom) :: boolean
   def matches?(query_string, data, mod) do
-    [token] = parse(query_string)
-    token_matches?(token, data, mod)
+    query_string
+    |> parse
+    |> do_matches?(data, mod)
+  end
+
+  @spec do_matches?([CanQL.token], any, atom) :: boolean
+  defp do_matches?(tokens, data, mod) do
+    tokens
+    |> Enum.reduce_while(true, fn (token, _) ->
+      if token_matches?(token, data, mod) do
+        {:cont, true}
+      else
+        {:halt, false}
+      end
+    end)
   end
 
   @spec token_matches?(token, any, atom) :: boolean
+  defp token_matches?(tokens, data, mod) when is_list(tokens),
+    do: do_matches?(tokens, data, mod)
   defp token_matches?({:and, {tok_a, tok_b}}, data, mod),
     do: token_matches?(tok_a, data, mod) and token_matches?(tok_b, data, mod)
   defp token_matches?({:or, {tok_a, tok_b}}, data, mod),
@@ -35,6 +50,7 @@ defmodule CanQL do
   @spec parse(String.t) :: {:query, [token]}
   def parse(query_string) do
     [{:data, query_string}]
+    |> QuoteParser.parse
     |> BooleanParser.parse
   end
 end
