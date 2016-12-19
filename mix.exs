@@ -1,11 +1,11 @@
-defmodule CanQL.Mixfile do
+defmodule SearchQL.Mixfile do
   use Mix.Project
 
   @version "1.0.0"
-  @github_url "https://github.com/usecanvas/canql"
+  @github_url "https://github.com/usecanvas/searchql"
 
   def project do
-    [app: :canql,
+    [app: :searchql,
      description: "A natural-ish language query parser",
      package: package,
      docs: docs,

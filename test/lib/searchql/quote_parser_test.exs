@@ -1,9 +1,9 @@
-defmodule CanQL.QuoteParserTest do
+defmodule SearchQL.QuoteParserTest do
   use ExUnit.Case, async: true
 
-  doctest CanQL.QuoteParser
+  doctest SearchQL.QuoteParser
 
-  alias CanQL.QuoteParser
+  alias SearchQL.QuoteParser
 
   test "parses basic quotes" do
     assert QuoteParser.parse([data: ~s("foo bar")]) ==

@@ -1,20 +1,20 @@
-defmodule CanQL.QuoteParser do
+defmodule SearchQL.QuoteParser do
   @moduledoc """
-  A parser for quotes in CanQL queries.
+  A parser for quotes in SearchQL queries.
   """
 
-  @behaviour CanQL.Parser
+  @behaviour SearchQL.Parser
 
   @doc """
   Parse a list of tokens for quotes
 
-      iex> CanQL.QuoteParser.parse([{:data, ~s("foo")}])
+      iex> SearchQL.QuoteParser.parse([{:data, ~s("foo")}])
       [{:quote, "foo"}]
   """
-  @spec parse([CanQL.token]) :: [CanQL.token]
+  @spec parse([SearchQL.token]) :: [SearchQL.token]
   def parse(tokens), do: do_parse(tokens)
 
-  @spec do_parse([CanQL.token], [CanQL.token]) :: [CanQL.token]
+  @spec do_parse([SearchQL.token], [SearchQL.token]) :: [SearchQL.token]
   defp do_parse(tokens, result \\ [])
   defp do_parse([], result), do: Enum.reverse(result)
   defp do_parse([{:data, data} | tokens], result) do
@@ -24,7 +24,8 @@ defmodule CanQL.QuoteParser do
   defp do_parse([token | tokens], result),
     do: do_parse(tokens, [token | result])
 
-  @spec parse_quote(String.t, [CanQL.token], CanQL.token) :: [CanQL.token]
+  @spec parse_quote(String.t, [SearchQL.token], SearchQL.token)
+    :: [SearchQL.token]
   defp parse_quote(string, tokens, state \\ {:data, ""})
   defp parse_quote("", tokens, {_, ""}), do: tokens
   defp parse_quote("", tokens, state), do: [state | tokens]

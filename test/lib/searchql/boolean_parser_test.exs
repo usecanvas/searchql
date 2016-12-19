@@ -1,9 +1,9 @@
-defmodule CanQL.BooleanParserTest do
+defmodule SearchQL.BooleanParserTest do
   use ExUnit.Case, async: true
 
-  doctest CanQL.BooleanParser
+  doctest SearchQL.BooleanParser
 
-  alias CanQL.{BooleanParser, QuoteParser}
+  alias SearchQL.{BooleanParser, QuoteParser}
 
   test "ignores non-boolean expressions" do
     assert BooleanParser.parse([data: "foo bar"]) == [data: "foo bar"]

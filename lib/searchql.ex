@@ -1,10 +1,10 @@
-defmodule CanQL do
+defmodule SearchQL do
   @moduledoc """
   A parser for the Canvas Query Language—a syntax for searching and filtering
   Canvas documents.
   """
 
-  alias CanQL.{BooleanParser, QuoteParser}
+  alias SearchQL.{BooleanParser, QuoteParser}
 
   @type token :: {atom, String.t | {token, token}}
 
@@ -15,7 +15,7 @@ defmodule CanQL do
   def matches?(query_string, data, mod),
     do: query_string |> parse |> do_matches?(data, mod)
 
-  @spec do_matches?([CanQL.token], any, atom) :: boolean
+  @spec do_matches?([SearchQL.token], any, atom) :: boolean
   defp do_matches?(tokens, data, mod) do
     tokens
     |> Enum.reduce_while(true, fn (token, _) ->
@@ -41,7 +41,7 @@ defmodule CanQL do
   Parse a query string into a tree that can be iterated over in order to
   evaluate the query against data.
 
-      iex> CanQL.parse(~s(foo bar baz))
+      iex> SearchQL.parse(~s(foo bar baz))
       [{:data, "foo bar baz"}]
   """
   @spec parse(String.t) :: [token]

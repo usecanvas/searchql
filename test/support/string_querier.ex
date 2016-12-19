@@ -1,5 +1,5 @@
-defmodule CanQL.StringQuerier do
-  @behaviour CanQL.Querier
+defmodule SearchQL.StringQuerier do
+  @behaviour SearchQL.Querier
 
   @spec data(String.t, String.t) :: boolean
   def data(string, data), do: String.contains?(data, string)
