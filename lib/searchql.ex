@@ -1,7 +1,6 @@
 defmodule SearchQL do
   @moduledoc """
-  A parser for the Canvas Query Language—a syntax for searching and filtering
-  Canvas documents.
+  A parsed representation of a human-written search query.
   """
 
   alias SearchQL.{BooleanParser, QuoteParser}
