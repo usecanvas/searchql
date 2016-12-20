@@ -43,7 +43,7 @@ defmodule SearchQL.Mixfile do
   end
 
   defp aliases do
-    [ci: ["test", "credo --strict", "dialyzer"]]
+    [ci: ["test", "credo --strict", "dialyzer --halt-exit-status"]]
   end
 
   defp package do
