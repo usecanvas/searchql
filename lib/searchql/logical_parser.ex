@@ -1,22 +1,22 @@
-defmodule SearchQL.BooleanParser do
+defmodule SearchQL.LogicalParser do
   @moduledoc """
-  Parses boolean expressions in a SearchQL query.
+  Parses logical expressions in a SearchQL query.
   """
 
   @behaviour SearchQL.Parser
 
   @doc """
-  Parses a list of tokens and returns that list with boolean expressions
-  replaced by boolean tokens. Note that boolean parsing is case-**in**sensitive.
+  Parses a list of tokens and returns that list with logical expressions
+  replaced by logical tokens. Note that logical parsing is case-**in**sensitive.
 
-      iex> SearchQL.BooleanParser.parse([data: "foo and bar"])
+      iex> SearchQL.LogicalParser.parse([data: "foo and bar"])
       [and: {[data: "foo"], [data: "bar"]}]
 
   This function parses tokens in reverse order, "OR"s before "AND"s. This
   results in a parsing where "AND" has the higher precedence, and where operator
   precedence is left-associative:
 
-      iex> SearchQL.BooleanParser.parse([data: "foo or bar and baz and qux"])
+      iex> SearchQL.LogicalParser.parse([data: "foo or bar and baz and qux"])
       [or: {
         [data: "foo"],
         [and: {

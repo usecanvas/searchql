@@ -59,7 +59,7 @@ defmodule SearchQLTest do
   end
 
   describe ".parse/1" do
-    test "parses combined boolean and quotes" do
+    test "parses combined logical and quotes" do
       assert SearchQL.parse(~s("foo bar" AND baz)) ==
         [and: {[quote: "foo bar"], [data: "baz"]}]
     end

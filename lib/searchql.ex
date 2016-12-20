@@ -3,7 +3,7 @@ defmodule SearchQL do
   A parsed representation of a human-written search query.
   """
 
-  alias SearchQL.{BooleanParser, QuoteParser}
+  alias SearchQL.{LogicalParser, QuoteParser}
 
   @type token :: {atom, String.t | {[token], [token]}}
 
@@ -45,5 +45,5 @@ defmodule SearchQL do
   """
   @spec parse(String.t) :: [token]
   def parse(query_string),
-    do: [{:data, query_string}] |> QuoteParser.parse |> BooleanParser.parse
+    do: [{:data, query_string}] |> QuoteParser.parse |> LogicalParser.parse
 end
