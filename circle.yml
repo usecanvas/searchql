@@ -15,7 +15,6 @@ dependencies:
     - MIX_ENV=test mix compile
   cache_directories:
     - ~/.asdf
-    - ~/.mix
     - deps
     - _build
 
