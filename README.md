@@ -1,4 +1,4 @@
-# SearchQL
+# SearchQL [![CircleCI](https://circleci.com/gh/usecanvas/searchql.svg?style=svg)](https://circleci.com/gh/usecanvas/searchql)
 
 SearchQL is a search query parser written in Elixir. Given a query such as:
 
