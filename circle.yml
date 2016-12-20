@@ -13,6 +13,7 @@ dependencies:
     - mix local.rebar --force
     - mix deps.get
     - MIX_ENV=test mix compile
+    - MIX_ENV=test mix run -e "Dialyxir.Project.plts_list([], false) |> Dialyxir.Plt.check()"
   cache_directories:
     - ~/.asdf
     - deps
