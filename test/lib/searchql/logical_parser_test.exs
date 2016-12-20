@@ -55,4 +55,20 @@ defmodule SearchQL.LogicalParserTest do
         [data: "foo", quote: "bar baz"],
         [data: "qux", quote: "quux corge"]}]
   end
+
+  test "parses NOT" do
+    assert LogicalParser.parse([data: "foo AND NOT bar"]) ==
+      [and: {
+        [data: "foo"],
+        [not: {[data: "bar"]}]}]
+  end
+
+  test "parses NOT with higher binding than OR" do
+    assert LogicalParser.parse([data: "foo AND NOT bar OR baz"]) ==
+      [or: {
+        [and: {
+          [data: "foo"],
+          [not: {[data: "bar"]}]}],
+        [data: "baz"]}]
+  end
 end
