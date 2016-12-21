@@ -38,12 +38,20 @@ defmodule SearchQL.LogicalParser do
 
   @spec parse_and([SearchQL.token], [SearchQL.token]) :: [SearchQL.token]
   defp parse_and(tokens, result \\ [])
-  defp parse_and([], result),
-    do: result |> Enum.reduce([], &join_words/2) |> Enum.reverse
+  defp parse_and([], result), do: result |> Enum.reverse |> parse_not
   defp parse_and([{:word, word} | tokens], result) when word in ~w(and AND),
     do: [{:and, {parse_and(tokens), parse_and([], result)}}]
   defp parse_and([token | tokens], result),
     do: parse_and(tokens, [token | result])
+
+  @spec parse_not([SearchQL.token], [SearchQL.token]) :: [SearchQL.token]
+  defp parse_not(tokens, result \\ [])
+  defp parse_not([], result),
+    do: result |> Enum.reduce([], &join_words/2) |> Enum.reverse
+  defp parse_not([{:word, word} | tokens], result) when word in ~w(not NOT),
+    do: [{:not, {parse_not(result)}} | parse_not(tokens)]
+  defp parse_not([token | tokens], result),
+    do: parse_not(tokens, [token | result])
 
   @spec make_words(SearchQL.token, [SearchQL.token]) :: [SearchQL.token]
   defp make_words({:data, data}, tokens) do

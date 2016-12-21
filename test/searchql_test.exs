@@ -56,6 +56,13 @@ defmodule SearchQLTest do
       query = ~s("foo bar" OR "foo baz" AND qux)
       assert SearchQL.matches?(query, "foo bar qux", StringQuerier)
     end
+
+    test "matches NOT" do
+      query = ~s(foo OR NOT bar)
+      assert SearchQL.matches?(query, "foo", StringQuerier)
+      assert SearchQL.matches?(query, "baz", StringQuerier)
+      refute SearchQL.matches?(query, "bar", StringQuerier)
+    end
   end
 
   describe ".parse/1" do
