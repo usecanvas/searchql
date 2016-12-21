@@ -3,7 +3,7 @@
 SearchQL is a search query parser written in Elixir. Given a query such as:
 
 ```
-foo AND bar OR "qux AND quux" OR corge AND grault AND garply
+foo AND bar OR "qux AND quux" OR corge AND NOT grault AND garply
 ```
 
 SearchQL can generate a data representation of the query:
@@ -14,7 +14,7 @@ SearchQL can generate a data representation of the query:
     [and: {[data: "foo"], [data: "bar"]}],
     [quote: "qux AND quux"]}],
   [and: {
-    [and: {[data: "corge"], [data: "grault"]}],
+    [and: {[data: "corge"], [not: {[data: "grault"]}]}],
     [data: "garply"]}]}]
 ```
 

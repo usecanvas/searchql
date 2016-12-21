@@ -1,7 +1,7 @@
 defmodule SearchQL.Mixfile do
   use Mix.Project
 
-  @version "2.1.0"
+  @version "2.1.1"
   @github_url "https://github.com/usecanvas/searchql"
 
   def project do
