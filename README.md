@@ -11,11 +11,9 @@ SearchQL can generate a data representation of the query:
 ```elixir
 [or: {
   [or: {
-    [and: {[data: "foo"], [data: "bar"]}],
+    [data: "foo", data: "bar"],
     [quote: "qux AND quux"]}],
-  [and: {
-    [and: {[data: "corge"], [not: {[data: "grault"]}]}],
-    [data: "garply"]}]}]
+  [data: "corge", not: {[data: "grault"]}, data: "garply"]}]
 ```
 
 Notice that in the query parsing, `AND` binds tighter than `OR`, and both

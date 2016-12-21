@@ -24,25 +24,19 @@ defmodule SearchQL.LogicalParserTest do
 
   test "parses AND expressions" do
     assert LogicalParser.parse([{:data, "foo AND bar"}]) ==
-      [and: {[data: "foo"], [data: "bar"]}]
+      [data: "foo", data: "bar"]
   end
 
   test "parses AND as left-associative" do
     assert LogicalParser.parse([{:data, "foo AND bar AND baz"}]) ==
-      [and: {
-        [and: {
-          [data: "foo"],
-          [data: "bar"]}],
-        [data: "baz"]}]
+      [data: "foo", data: "bar", data: "baz"]
   end
 
   test "parses AND with higher precedence than OR" do
     assert LogicalParser.parse([{:data, "foo OR bar AND baz qux"}]) ==
       [or: {
         [data: "foo"],
-        [and: {
-          [data: "bar"],
-          [data: "baz qux"]}]}]
+        [data: "bar", data: "baz qux"]}]
   end
 
   test "parses already-parsed expressions" do
@@ -58,17 +52,13 @@ defmodule SearchQL.LogicalParserTest do
 
   test "parses NOT" do
     assert LogicalParser.parse([data: "foo AND NOT bar"]) ==
-      [and: {
-        [data: "foo"],
-        [not: {[data: "bar"]}]}]
+      [data: "foo", not: {[data: "bar"]}]
   end
 
   test "parses NOT with higher binding than OR" do
     assert LogicalParser.parse([data: "foo AND NOT bar OR baz"]) ==
       [or: {
-        [and: {
-          [data: "foo"],
-          [not: {[data: "bar"]}]}],
+        [data: "foo", not: {[data: "bar"]}],
         [data: "baz"]}]
   end
 end

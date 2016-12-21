@@ -29,8 +29,6 @@ defmodule SearchQL do
   @spec token_matches?(token, any, atom) :: boolean
   defp token_matches?(tokens, data, mod) when is_list(tokens),
     do: do_matches?(tokens, data, mod)
-  defp token_matches?({:and, {tok_a, tok_b}}, data, mod),
-    do: token_matches?(tok_a, data, mod) and token_matches?(tok_b, data, mod)
   defp token_matches?({:or, {tok_a, tok_b}}, data, mod),
     do: token_matches?(tok_a, data, mod) or token_matches?(tok_b, data, mod)
   defp token_matches?({:not, {tokens}}, data, mod),
