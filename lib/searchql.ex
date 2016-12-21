@@ -33,6 +33,8 @@ defmodule SearchQL do
     do: token_matches?(tok_a, data, mod) and token_matches?(tok_b, data, mod)
   defp token_matches?({:or, {tok_a, tok_b}}, data, mod),
     do: token_matches?(tok_a, data, mod) or token_matches?(tok_b, data, mod)
+  defp token_matches?({:not, {tokens}}, data, mod),
+    do: !token_matches?(tokens, data, mod)
   defp token_matches?({func, args}, data, mod),
     do: apply(mod, func, [args, data])
 
