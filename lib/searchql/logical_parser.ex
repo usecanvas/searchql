@@ -10,7 +10,7 @@ defmodule SearchQL.LogicalParser do
   replaced by logical tokens. Note that logical parsing is case-**in**sensitive.
 
       iex> SearchQL.LogicalParser.parse([data: "foo and bar"])
-      [and: {[data: "foo"], [data: "bar"]}]
+      [data: "foo", data: "bar"]
 
   This function parses tokens in reverse order, "OR"s before "AND"s. This
   results in a parsing where "AND" has the higher precedence, and where operator
@@ -19,11 +19,7 @@ defmodule SearchQL.LogicalParser do
       iex> SearchQL.LogicalParser.parse([data: "foo or bar and baz and qux"])
       [or: {
         [data: "foo"],
-        [and: {
-          [and: {
-            [data: "bar"],
-            [data: "baz"]}],
-          [data: "qux"]}]}]
+        [data: "bar", data: "baz", data: "qux"]}]
   """
   @spec parse([SearchQL.token]) :: [SearchQL.token]
   def parse(tokens), do: tokens |> Enum.reduce([], &make_words/2) |> parse_or
@@ -40,7 +36,7 @@ defmodule SearchQL.LogicalParser do
   defp parse_and(tokens, result \\ [])
   defp parse_and([], result), do: result |> Enum.reverse |> parse_not
   defp parse_and([{:word, word} | tokens], result) when word in ~w(and AND),
-    do: [{:and, {parse_and(tokens), parse_and([], result)}}]
+    do: parse_and(tokens) ++ parse_and([], result)
   defp parse_and([token | tokens], result),
     do: parse_and(tokens, [token | result])
 
